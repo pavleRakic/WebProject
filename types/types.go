@@ -6,21 +6,6 @@ type UserStore interface {
 	CreateUser(User) error
 }
 
-/*
-type mockUserStore struct {
-
-}
-func GetUserByEmail(email string) (*User, error) {
-	return nil, nil
-}*/
-
-/*type RegisterUserPayload struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-}*/
-
 type RegisterUserPayload struct {
 	IDUser           int    `json:"idUser"`
 	Username         string `json:"username" validate:"required"`
@@ -52,4 +37,45 @@ type User struct {
 	QuizzerPoints    int    `json:"quizzerPoints"`
 	CreatorPoints    int    `json:"creatorPoints"`
 	TranslatorPoints int    `json:"translatorPoints"`
+}
+
+type ProductStore interface {
+	GetProducts() ([]Quiz, error)
+	CreateQuiz(Quiz) error
+}
+
+type Quiz struct {
+	IDQuiz       int     `json:"idQuiz"`
+	QuizName     string  `json:"quizName"`
+	Description  string  `json:"description"`
+	CreationDate string  `json:"creationDate"`
+	HasTimer     bool    `json:"hasTimer"`
+	Timer        int     `json:"timer"`
+	HasLifeline  bool    `json:"hasLifeline"`
+	IDType       int     `json:"idType"`
+	IDCreator    int     `json:"idCreator"`
+	IDCategory   int     `json:"idCategory"`
+	IDLanguage   int     `json:"idLanguage"`
+	AvgRating    float32 `json:"avgRating"`
+	IsNSFW       bool    `json:"isNSFW"`
+	UniquePlays  int     `json:"uniquePlays"`
+	Plays        int     `json:"plays"`
+}
+
+type CreateQuizPayload struct {
+	IDQuiz       int     `json:"idQuiz"`
+	QuizName     string  `json:"quizName"`
+	Description  string  `json:"description"`
+	CreationDate string  `json:"creationDate"`
+	HasTimer     bool    `json:"hasTimer"`
+	Timer        int     `json:"timer"`
+	HasLifeline  bool    `json:"hasLifeline"`
+	IDType       int     `json:"idType"`
+	IDCreator    int     `json:"idCreator"`
+	IDCategory   int     `json:"idCategory"`
+	IDLanguage   int     `json:"idLanguage"`
+	AvgRating    float32 `json:"avgRating"`
+	IsNSFW       bool    `json:"isNSFW"`
+	UniquePlays  int     `json:"uniquePlays"`
+	Plays        int     `json:"plays"`
 }

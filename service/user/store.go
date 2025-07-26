@@ -2,6 +2,7 @@ package user
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/pavleRakic/testGoApi/types"
@@ -63,7 +64,7 @@ func scanRowIntoUser(rows *sql.Rows) (*types.User, error) {
 }
 
 func (s *Store) GetUserByID(id int) (*types.User, error) {
-	rows, err := s.db.Query("SELECT * FROM QuizUser WHERE idUser = @idUser", sql.Named("idUser", id))
+	/*rows, err := s.db.Query("SELECT * FROM QuizUser WHERE idUser = @idUser", sql.Named("idUser", id))
 	if err != nil {
 		return nil, err
 	}
@@ -79,6 +80,19 @@ func (s *Store) GetUserByID(id int) (*types.User, error) {
 
 	if u.IDUser == 0 {
 		return nil, fmt.Errorf("user not found")
+	}
+
+	return u, nil*/
+
+	row := s.db.QueryRow("SELECT * FROM QuizUser WHERE idUser = @idUser", sql.Named("idUser", id))
+
+	u := new(types.User)
+	err := row.Scan(&u.IDUser, &u.Username, &u.Password, &u.Email, &u.IsAdult, &u.IDRole, &u.CurrentStreak, &u.HighestStreak, &u.QuizzerPoints, &u.CreatorPoints, &u.TranslatorPoints)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, fmt.Errorf("user not found")
+		}
+		return nil, err
 	}
 
 	return u, nil
