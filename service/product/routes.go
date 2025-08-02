@@ -7,6 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 
+	"github.com/pavleRakic/testGoApi/service/auth"
 	"github.com/pavleRakic/testGoApi/types"
 	"github.com/pavleRakic/testGoApi/utils"
 )
@@ -20,7 +21,7 @@ func NewHandler(store types.ProductStore) *Handler {
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
-	router.HandleFunc("/quizs", h.handleCreateQuiz).Methods(http.MethodPost)
+	router.HandleFunc("/quizs", auth.JWTMiddleware2(h.handleCreateQuiz)).Methods(http.MethodPost)
 	router.HandleFunc("/quizs", h.handleGetQuiz).Methods(http.MethodGet)
 
 }

@@ -47,10 +47,52 @@ func JWTMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		// Optionally attach user ID to request context
 		ctx := context.WithValue(r.Context(), "userID", userID)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
+
+}
+
+func JWTMiddleware2(next http.HandlerFunc) http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		token, err := r.Cookie("token")
+
+		if err != nil {
+			http.Error(w, "Authorization denied", http.StatusUnauthorized)
+			return
+		}
+
+		/*
+			authHeader := r.Header.Get("Authorization")
+			if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
+				http.Error(w, "Missing or invalid Authorization header", http.StatusUnauthorized)
+				return
+			}
+
+			tokenStr := strings.TrimPrefix(authHeader, "Bearer ")*/
+		secret := []byte(config.Envs.JWTSecret)
+
+		userID, err := VerifyJWT(token.Value, secret)
+		if err != nil {
+			http.Error(w, "Invalid token", http.StatusUnauthorized)
+			return
+		}
+
+		cookie := &http.Cookie{
+			Name:     "userID",
+			Value:    strconv.Itoa(userID),
+			Path:     "/",
+			HttpOnly: true,
+			Secure:   true,
+			SameSite: http.SameSiteLaxMode,
+		}
+
+		http.SetCookie(w, cookie)
+
+		next(w, r)
+	}
 
 }
 
@@ -77,16 +119,6 @@ func VerifyJWT(tokenString string, secret []byte) (int, error) {
 		if err != nil {
 			return 0, errors.New("invalid userID in token claims")
 		}
-
-		/*err2 := store.GetUserByID(userID)
-		// Optional: check expiration if you want, though jwt.Parse usually does it
-		// expiredAt, ok := claims["expiredAt"].(float64)
-		// if ok && int64(expiredAt) < time.Now().Unix() {
-		//     return 0, errors.New("token expired")
-		// }
-		if err2 == nil {
-			return 0, errors.New("That user doesn't exist")
-		}*/
 
 		return userID, nil
 	}
