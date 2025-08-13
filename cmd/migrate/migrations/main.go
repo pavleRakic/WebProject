@@ -6,9 +6,9 @@ import (
 
 	"github.com/golang-migrate/migrate/v4"
 
-	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/golang-migrate/migrate/v4/database/sqlserver"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/microsoft/go-mssqldb"
 	datab "github.com/pavleRakic/testGoApi/db"
 )
 
@@ -26,7 +26,7 @@ func main() {
 
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://cmd/migrate/migrations",
-		"mssqldb",
+		"webProjekatTest",
 		driver,
 	)
 

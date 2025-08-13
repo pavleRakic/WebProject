@@ -4,21 +4,54 @@
     <meta charset="UTF-8" />
     <title>ARTPOP Login</title>
     <script src="/static/index.js" defer></script>
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="icon" href="/static/favicon.ico" type="image/png">
 </head>
 <body>
-    <p>ARTPOP</p>
 
-    <form action="">
+    <p id="welcomeParag"></p>
+    <form action="" id="loginForm">
         <h1>Login</h1>
-        <input type="text" placeholder="Email" required><br>
-        <input type="password" placeholder="Password" required><br>
+        <input id="emailInput" name="email" type="text" placeholder="Email" required><br>
+        <input id="passwordInput" name="userPassword" type="password" placeholder="Password" required><br>
         <label>
-            <input type="checkbox"> Remember me
+            <input type="checkbox" name="remember"> Remember me
         </label>
         <a href="#">Forgot password?</a><br>
 
-        <button type="submit" class="btn">Login</button>
+        <button id="submitBtn"  type="submit" class="btn">Login</button>
         <p>Don't have an account? <a href="#">Register</a></p>
     </form>
+    
+    <div class="card-container" id="quizGrid">
+
+        <div class="card">
+            <img src="/static/ARTPOP.jpg">
+            <div class="card-content">
+                <h3>Card title</h3>
+                <p> Description sidsa ehfjks wdhasjdk wdiaoos asjkdkasdk</p>
+                <a href="" class="btn">Play</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="/static/ARTPOP.jpg">
+            <div class="card-content">
+                <h3>Card title 2</h3>
+                <p> Description sidsa ehfjks wdhasjdk wdiaoos asjkdkasdk</p>
+                <a href="" class="btn">Play</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="/static/ARTPOP.jpg">
+            <div class="card-content">
+                <h3>Card title 3</h3>
+                <p> Descasdaription sidsasdaa ehfjks wdhasjdk wdiaoos asjksdadkasdk</p>
+                <a href="" class="btn">Play</a>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>

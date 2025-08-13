@@ -16,7 +16,7 @@ func NewStore(db *sql.DB) *Store {
 
 func (s *Store) GetProducts() ([]types.Quiz, error) {
 
-	rows, err := s.db.Query("SELECT * FROM Quiz")
+	rows, err := s.db.Query("SELECT * FROM WebProject.Quiz")
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func scanRowsIntoQuiz(rows *sql.Rows) (*types.Quiz, error) {
 
 func (s *Store) CreateQuiz(quiz types.Quiz) error {
 
-	_, err := s.db.Exec("INSERT INTO Quiz "+
+	_, err := s.db.Exec("INSERT INTO WebProject.Quiz "+
 		"(idQuiz, quizName, description, creationDate, hasTimer, timer, hasLifeline, idType, idCreator, idCategory, idLanguage, avgRating, isNSFW, uniquePlays, plays)"+
 		"VALUES(@idQuiz, @quizName, @description, @creationDate, @hasTimer, @timer, @hasLifeline, @idType, @idCreator, @idCategory, @idLanguage, @avgRating, @isNSFW, @uniquePlays, @plays)",
 		sql.Named("idQuiz", quiz.IDQuiz),

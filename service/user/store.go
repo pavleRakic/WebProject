@@ -17,7 +17,7 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) GetUserByEmail(email string) (*types.User, error) {
-	rows, err := s.db.Query("SELECT * FROM QuizUser WHERE email = @email", sql.Named("email", email))
+	rows, err := s.db.Query("SELECT * FROM WebProject.[User] WHERE email = @email", sql.Named("email", email))
 
 	if err != nil {
 		return nil, err
@@ -84,7 +84,7 @@ func (s *Store) GetUserByID(id int) (*types.User, error) {
 
 	return u, nil*/
 
-	row := s.db.QueryRow("SELECT * FROM QuizUser WHERE idUser = @idUser", sql.Named("idUser", id))
+	row := s.db.QueryRow("SELECT * FROM WebProject.[User] WHERE idUser = @idUser", sql.Named("idUser", id))
 
 	u := new(types.User)
 	err := row.Scan(&u.IDUser, &u.Username, &u.Password, &u.Email, &u.IsAdult, &u.IDRole, &u.CurrentStreak, &u.HighestStreak, &u.QuizzerPoints, &u.CreatorPoints, &u.TranslatorPoints)
@@ -99,7 +99,7 @@ func (s *Store) GetUserByID(id int) (*types.User, error) {
 }
 
 func (s *Store) CreateUser(user types.User) error {
-	_, err := s.db.Exec("INSERT INTO QuizUser"+
+	_, err := s.db.Exec("INSERT INTO WebProject.[User]"+
 		"(idUser,username,userPassword,email,isAdult,idRole,currentStreak,highestStreak, quizzerPoints, creatorPoints, translatorPoints)"+
 		"VALUES(@idUser, @username, @userPassword, @email, @isAdult, @idRole, @currentStreak, @highestStreak, @quizzerPoints, @creatorPoints, @translatorPoints)",
 		sql.Named("idUser", user.IDUser),
