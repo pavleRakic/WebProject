@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/static/quizWindow2.js" defer></script>
+        
+        <title>ARTPOP Login</title>
+        <link rel="stylesheet" href="quizWindow.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="icon" href="/static/favicon.ico" type="image/png">
+    </head>
+
+
+    <body>
+        <div class="quiz" data-quiz-id="1" id="quiz">
+            <div class="quiz-title-card" id="quizName">
+                <p>Quiz title</p>
+            </div>
+            <div class="question-nav" id="questionNumbers">
+                <div class="question-circle">
+                    <p>1</p>
+                </div>
+                <div class="question-circle">
+                    <p>2</p>
+                </div>
+                <div class="question-circle">
+                    <p>3</p>
+                </div>
+                <div class="question-circle">
+                    <p>4</p>
+                </div>
+                <div class="question-circle">
+                    <p>5</p>
+                </div>
+                <div class="question-circle">
+                    <p>6</p>
+                </div>
+            </div>
+            <div class="question-card" id="questionText">
+                <p>Question</p>
+
+            </div>
+
+            <img src="forest.jpg" id="questionPicture">
+
+            <div class="option-container" id="option-container">
+            
+                <div class="option">
+                    <img src="forest.jpg">
+                    <div class="option-content">
+                        <p>option text</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="submit()">Submit</button>
+        </div>
+            
+    </body>
+</html>

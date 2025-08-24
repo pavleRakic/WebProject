@@ -19,11 +19,9 @@ func TestUserServiceHandlers(t *testing.T) {
 	t.Run("should fail if the payload is invalid", func(t *testing.T) {
 		payload := types.RegisterUserPayload{
 			Username:         "user",
-			IDUser:           1,
 			Email:            "invalid",
 			Password:         "asd",
 			IsAdult:          true,
-			IDRole:           2,
 			CurrentStreak:    20,
 			HighestStreak:    30,
 			QuizzerPoints:    20,
@@ -55,7 +53,6 @@ func TestUserServiceHandlers(t *testing.T) {
 			Email:            "asd@gmail.com",
 			Password:         "asd",
 			IsAdult:          true,
-			IDRole:           2,
 			CurrentStreak:    20,
 			HighestStreak:    30,
 			QuizzerPoints:    20,

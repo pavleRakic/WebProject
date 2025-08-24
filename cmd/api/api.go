@@ -7,9 +7,16 @@ import (
 	"path/filepath"
 
 	"github.com/gorilla/mux"
+	option "github.com/pavleRakic/testGoApi/service/option"
 	permission "github.com/pavleRakic/testGoApi/service/permission"
+	question "github.com/pavleRakic/testGoApi/service/question"
 	product "github.com/pavleRakic/testGoApi/service/quiz"
 	resource "github.com/pavleRakic/testGoApi/service/resource"
+	resourcePermission "github.com/pavleRakic/testGoApi/service/resource_permission"
+	role "github.com/pavleRakic/testGoApi/service/role"
+	roleResourcePermission "github.com/pavleRakic/testGoApi/service/role_resource_permission"
+	userRole "github.com/pavleRakic/testGoApi/service/user_role"
+
 	"github.com/pavleRakic/testGoApi/service/user"
 )
 
@@ -45,6 +52,30 @@ func (s *APIServer) Run() error {
 	permissionStore := permission.NewStore(s.db)
 	permissionHandler := permission.NewHandler(permissionStore)
 	permissionHandler.RegisterRoutes(subrouter)
+
+	resourcePermissionStore := resourcePermission.NewStore(s.db)
+	resourcePermissionHandler := resourcePermission.NewHandler(resourcePermissionStore)
+	resourcePermissionHandler.RegisterRoutes(subrouter)
+
+	roleResourcePermissionStore := roleResourcePermission.NewStore(s.db)
+	roleResourcePermissionHandler := roleResourcePermission.NewHandler(roleResourcePermissionStore)
+	roleResourcePermissionHandler.RegisterRoutes(subrouter)
+
+	roleStore := role.NewStore(s.db)
+	roleHandler := role.NewHandler(roleStore)
+	roleHandler.RegisterRoutes(subrouter)
+
+	userRoleStore := userRole.NewStore(s.db)
+	userRoleHandler := userRole.NewHandler(userRoleStore)
+	userRoleHandler.RegisterRoutes(subrouter)
+
+	questionStore := question.NewStore(s.db)
+	questionHandler := question.NewHandler(questionStore)
+	questionHandler.RegisterRoutes(subrouter)
+
+	optionStore := option.NewStore(s.db)
+	optionHandler := option.NewHandler(optionStore)
+	optionHandler.RegisterRoutes(subrouter)
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./cmd/static/"))))
 

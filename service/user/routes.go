@@ -100,12 +100,10 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = h.store.CreateUser(types.User{
-		IDUser:           payload.IDUser,
 		Username:         payload.Username,
 		Password:         hashedPassword,
 		Email:            payload.Email,
 		IsAdult:          payload.IsAdult,
-		IDRole:           payload.IDRole,
 		HighestStreak:    payload.HighestStreak,
 		CurrentStreak:    payload.CurrentStreak,
 		CreatorPoints:    payload.CreatorPoints,

@@ -19,7 +19,7 @@ fetch("/api/v1/quizs")
               <div class="card-content">
                 <h3>${post.quizName}</h3>
                 <p>${post.description}</p>
-                <a href="" class="btn">Play</a>
+                <a href="" type="button" class="btn" data-quiz-id="${post.idQuiz}">Play</a>
               </div>
             </div>`);
     });
@@ -27,6 +27,31 @@ fetch("/api/v1/quizs")
   .catch(error => {
     console.error("Fetch error:", error);
   });
+
+
+
+  const container = document.getElementById("quizGrid");
+
+  container.addEventListener("click", function(e) {
+      // Check if the clicked element has the class we want
+      if (e.target && e.target.classList.contains("btn")) {
+          e.preventDefault(); // stop page reload
+          const quizId = e.target.dataset.quizId;
+          console.log("Clicked quiz:", quizId);
+          
+          // Fetch quiz data or open editor
+          fetch(`/api/v1/quiz/${quizId}`)
+              .then(res => res.json())
+              .then(data => console.log("Quiz data:", data))
+              .catch(error => {
+                console.error("Fetch error:", error);
+              });
+            window.location.href = `/static/quizWindow.html?quizId=${quizId}`
+      }
+  });
+
+
+
 
   function decodeJwtPayload(token) {
     const payload = token.split('.')[1]; // get the middle part

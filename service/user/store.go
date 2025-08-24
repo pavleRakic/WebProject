@@ -48,7 +48,6 @@ func scanRowIntoUser(rows *sql.Rows) (*types.User, error) {
 		&user.Password,
 		&user.Email,
 		&user.IsAdult,
-		&user.IDRole,
 		&user.CurrentStreak,
 		&user.HighestStreak,
 		&user.CreatorPoints,
@@ -87,7 +86,7 @@ func (s *Store) GetUserByID(id int) (*types.User, error) {
 	row := s.db.QueryRow("SELECT * FROM WebProject.[User] WHERE idUser = @idUser", sql.Named("idUser", id))
 
 	u := new(types.User)
-	err := row.Scan(&u.IDUser, &u.Username, &u.Password, &u.Email, &u.IsAdult, &u.IDRole, &u.CurrentStreak, &u.HighestStreak, &u.QuizzerPoints, &u.CreatorPoints, &u.TranslatorPoints)
+	err := row.Scan(&u.IDUser, &u.Username, &u.Password, &u.Email, &u.IsAdult, &u.CurrentStreak, &u.HighestStreak, &u.QuizzerPoints, &u.CreatorPoints, &u.TranslatorPoints)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, fmt.Errorf("user not found")
@@ -100,14 +99,12 @@ func (s *Store) GetUserByID(id int) (*types.User, error) {
 
 func (s *Store) CreateUser(user types.User) error {
 	_, err := s.db.Exec("INSERT INTO WebProject.[User]"+
-		"(idUser,username,userPassword,email,isAdult,idRole,currentStreak,highestStreak, quizzerPoints, creatorPoints, translatorPoints)"+
-		"VALUES(@idUser, @username, @userPassword, @email, @isAdult, @idRole, @currentStreak, @highestStreak, @quizzerPoints, @creatorPoints, @translatorPoints)",
-		sql.Named("idUser", user.IDUser),
+		"(username,userPassword,email,isAdult,currentStreak,highestStreak, quizzerPoints, creatorPoints, translatorPoints)"+
+		"VALUES( @username, @userPassword, @email, @isAdult, @currentStreak, @highestStreak, @quizzerPoints, @creatorPoints, @translatorPoints)",
 		sql.Named("username", user.Username),
 		sql.Named("userPassword", user.Password),
 		sql.Named("email", user.Email),
 		sql.Named("isAdult", user.IsAdult),
-		sql.Named("idRole", user.IDRole),
 		sql.Named("currentStreak", user.CurrentStreak),
 		sql.Named("highestStreak", user.HighestStreak),
 		sql.Named("quizzerPoints", user.QuizzerPoints),
